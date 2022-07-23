@@ -1,12 +1,12 @@
 using Maze.Enums;
+using Maze.Generics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Maze.Managers
 {
-    public class SceneController : MonoBehaviour
+    public class SceneController : Singleton<SceneController>
     {
-        
         public void LoadScene(SceneIndex sceneName)
         {
             SceneManager.LoadScene((int)sceneName, LoadSceneMode.Single);
