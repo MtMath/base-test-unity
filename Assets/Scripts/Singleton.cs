@@ -42,10 +42,7 @@ namespace Maze.Generics
 
         private void Awake()
         {
-            if (!IsNull())
-            {
-                DontDestroyOnLoad(this);
-            }
+            DontDestroyOnLoad(this);
         }
 
         private static bool IsNull()
