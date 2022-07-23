@@ -5,14 +5,14 @@ namespace Maze.Generics
     public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {
         internal Singleton(){}
+        private static object _lock = new object();
 
         private static T _instance;
-
         public static T Instance
         {
             get
             {
-                lock (_instance)
+                lock (_lock)
                 {
                     Initialize();
                     return _instance;
@@ -50,7 +50,7 @@ namespace Maze.Generics
 
         private static bool IsNull()
         {
-            lock (_instance)
+            lock (_lock)
             {
                 return _instance == null && _instance.Equals(null);
             }
