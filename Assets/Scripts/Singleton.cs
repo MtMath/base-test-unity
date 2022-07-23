@@ -52,7 +52,7 @@ namespace Maze.Generics
         {
             lock (_lock)
             {
-                return _instance == null && _instance.Equals(null);
+                return _instance == null || _instance.Equals(null);
             }
         }
     }
