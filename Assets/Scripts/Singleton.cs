@@ -1,7 +1,6 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Maze.Enums
+namespace Maze.Generics
 {
     public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {
