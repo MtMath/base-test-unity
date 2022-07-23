@@ -21,7 +21,20 @@ namespace Maze.UI
         private void InitializeButtons()
         {
             btn_play.onClick.AddListener(() => SceneController.Instance.LoadAsyncScene(SceneIndex.Gameplay));
-            btn_exit.onClick.AddListener(Application.Quit);
+            btn_exit.onClick.AddListener(Quit);
         }
+        
+
+        private void Quit()
+        {
+            Application.Quit();
+            
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.ExitPlaymode();
+#endif
+
+        }
+
+        
     }
 }
