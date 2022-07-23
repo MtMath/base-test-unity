@@ -4,7 +4,7 @@ namespace Maze.Generics
 {
     public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {
-        private Singleton(){}
+        internal Singleton(){}
 
         private static T _instance;
 
