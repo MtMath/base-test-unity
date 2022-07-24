@@ -59,7 +59,6 @@ namespace Maze
         private void UpdateMovement(InputAction.CallbackContext context)
         {
             MovementValue = context.ReadValue<Vector2>();
-            Debug.Log(MovementValue);
         }
 
         private void UpdateLook(InputAction.CallbackContext context)
