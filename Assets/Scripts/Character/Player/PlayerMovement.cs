@@ -1,28 +1,36 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Maze.Character.Player
 {
+    [RequireComponent(typeof(PlayerMovementBase))]
     public class PlayerMovement : Character
     {
 
         private Transform playerCamera;
+
+        private PlayerMovementBase _movementBase;
         private InputController _inputController;
 
         private Vector3 storedVelocity;
 
         private void Awake()
         {
+            Initialize();
+        }
+
+        private void Initialize()
+        {
             if (Camera.main != null) 
                 playerCamera = Camera.main.transform;
 
             _inputController = InputController.Instance;
+            _movementBase = GetComponent<PlayerMovementBase>();
         }
 
         private void FixedUpdate()
         {
             Vector3 velocity = MovementVelocity();
-            SetVelocity(velocity);
+            _movementBase.SetVelocity(velocity);
             storedVelocity = velocity;
         }
 
