@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Timers;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -25,12 +25,12 @@ namespace Maze.UI
         [Header("Auto Restore")]
         [SerializeField] private float timeToIncrease;
         [SerializeField] private float recoveryAmount;
-        [SerializeField] private float timeToStartRecover;
         
         [Space(15)]
         public FillEvent onValueChanged = new FillEvent();
         
         private float _currentAmount;
+        private Timer _timer;
 
         private void Awake()
         {
@@ -41,36 +41,50 @@ namespace Maze.UI
         {
             SetFilled();
             SetMaxAmount(maxAmount);
-        }
-
-        private void Update()
-        {
+            RestoreAmount();
+            
             if(AutoReduce)
                 DecreaseAmount();
         }
-
         public void UseFillAmount(float amount)
         {
-            float trueValue = _currentAmount - Mathf.Abs(amount);
-
+            float trueValue = _currentAmount - amount;
+            
             if (trueValue >= 0)
             {
-                _currentAmount = Mathf.Clamp(_currentAmount, minAmount, maxAmount);
+                _currentAmount = GetCurrentFill();
             
                 if(AutoRestore)
                     RestoreAmount();
-            
+
+                CanRestore = true;
                 onValueChanged?.Invoke(_currentAmount);
             }
         }
         public void RestoreAmount()
         {
-            if(CanRestore)
-                StartCoroutine(ERestore());
+            if (_currentAmount >= maxAmount)
+            {
+                Debug.LogWarning("Fill Amount is Full");
+                CanRestore = false;
+                return;
+            }
+            
+            CreateTimer(TimerOnElapsedRestore);
         }
         public void DecreaseAmount()
         {
-            UseFillAmount(recoveryAmount);
+            if (_timer == null)
+                CreateTimer(TimerOnElapsedReduce);
+            else
+                AddTimerEvent(TimerOnElapsedReduce);
+        }
+        private void CreateTimer(Action timerOnElapsed = null)
+        {
+            _timer = new Timer(timeToIncrease * 1000);
+            _timer.Start();
+            
+            _timer.Elapsed += (sender, args) => timerOnElapsed?.Invoke();
         }
 
         #region Setters
@@ -92,7 +106,7 @@ namespace Maze.UI
 
         public float GetCurrentFill()
         {
-            return _currentAmount;
+            return _currentAmount = Mathf.Clamp(_currentAmount, minAmount, maxAmount);;
         }
 
         #endregion
@@ -102,25 +116,34 @@ namespace Maze.UI
         public void OnPointerEnter(PointerEventData eventData)
         {
             EventSystem.current.SetSelectedGameObject(gameObject);
-
         }
 
         #endregion
 
-        #region Coroutines
+        #region Events
 
-        private IEnumerator ERestore()
+        public void AddTimerEvent(Action onTimerElapsed)
         {
-
-            while (_currentAmount < maxAmount)
+            _timer.Elapsed += (sender, args) => onTimerElapsed?.Invoke();
+        }
+        
+        private void TimerOnElapsedRestore()
+        {
+            if (CanRestore && _currentAmount < maxAmount)
             {
-                
+                UseFillAmount(recoveryAmount);
+            }
+            else
+            {
+                _timer.Stop();
+                _timer.Dispose();
             }
             
-            
-            onValueChanged?.Invoke(_currentAmount);
+        }
 
-            yield return null;
+        private void TimerOnElapsedReduce()
+        {
+            UseFillAmount(-recoveryAmount);
         }
 
         #endregion
@@ -132,9 +155,5 @@ namespace Maze.UI
                 SetFilled();
         }
 #endif
-
-        
     }
-
-   
 }
