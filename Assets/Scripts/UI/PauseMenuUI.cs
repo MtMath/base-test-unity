@@ -23,6 +23,8 @@ namespace Maze.UI
         private void Awake()
         {
             InitializeButton();
+            
+            HidePanel();
         }
         private void InitializeButton()
         {
@@ -38,11 +40,14 @@ namespace Maze.UI
         private void ShowPanel()
         {
             canvasGroup.alpha = 1f;
+            canvasGroup.blocksRaycasts = true;
+
         }
 
         private void HidePanel()
         {
             canvasGroup.alpha = 0f;
+            canvasGroup.blocksRaycasts = false;
         }
     }
 }
