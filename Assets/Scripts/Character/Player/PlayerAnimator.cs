@@ -21,7 +21,6 @@ namespace Maze.Character.Player
             Vector3 velocity = controller.GetVelocity();
             bool isWalking = velocity.sqrMagnitude > 0;
             
-            
             animator.SetBool(Walking, isWalking);
         }
     }
