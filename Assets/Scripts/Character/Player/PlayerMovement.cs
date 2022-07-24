@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Maze.Character.Player
 {
@@ -8,6 +9,8 @@ namespace Maze.Character.Player
         private Transform playerCamera;
         private InputController _inputController;
 
+        private Vector3 storedVelocity;
+
         private void Awake()
         {
             if (Camera.main != null) 
@@ -15,6 +18,14 @@ namespace Maze.Character.Player
 
             _inputController = InputController.Instance;
         }
+
+        private void FixedUpdate()
+        {
+            Vector3 velocity = MovementVelocity();
+            SetVelocity(velocity);
+            storedVelocity = velocity;
+        }
+
         private Vector3 MovementDirection()
         {
             Vector3 velocity = Vector3.zero;
@@ -40,7 +51,7 @@ namespace Maze.Character.Player
         
         public override Vector3 GetVelocity()
         {
-            throw new System.NotImplementedException();
+            return storedVelocity;
         }
 
         public override Vector3 GetMovementVelocity()
