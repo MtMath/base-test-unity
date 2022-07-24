@@ -5,4 +5,12 @@
         Main = 0,
         Gameplay = 1
     }
+
+    public enum InputActions
+    {
+        Movement,
+        Look,
+        LBM,
+        RBM,
+    }
 }
