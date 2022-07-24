@@ -6,7 +6,7 @@ namespace Maze.Character.Player
     public class PlayerMovement : Character
     {
 
-        private Transform playerCamera;
+        public Transform playerCamera;
 
         private PlayerMovementBase _movementBase;
         private InputController _inputController;
@@ -20,8 +20,8 @@ namespace Maze.Character.Player
 
         private void Initialize()
         {
-            if (Camera.main != null) 
-                playerCamera = Camera.main.transform;
+            if (playerCamera == null)
+                    playerCamera = Camera.main.transform;
 
             _inputController = InputController.Instance;
             _movementBase = GetComponent<PlayerMovementBase>();
