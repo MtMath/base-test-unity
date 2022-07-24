@@ -10,5 +10,6 @@ namespace Maze.ScriptableObejcts
 
         [Header("Rotation Properties")] 
         public float RotationSpeed;
+        public float RotationSmoothTime;
     }
 }
