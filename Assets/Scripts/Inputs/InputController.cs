@@ -22,12 +22,12 @@ namespace Maze
         private void Awake()
         {
             _inputs = new PlayerInputs();
-            InputEvents();
         }
 
         private void OnEnable()
         {
             _inputs.Player.Enable();
+            InputEvents();
         }
 
         private void OnDisable()
@@ -59,6 +59,7 @@ namespace Maze
         private void UpdateMovement(InputAction.CallbackContext context)
         {
             MovementValue = context.ReadValue<Vector2>();
+            Debug.Log(MovementValue);
         }
 
         private void UpdateLook(InputAction.CallbackContext context)
