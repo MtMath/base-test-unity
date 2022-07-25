@@ -1,19 +1,35 @@
+using System;
+using Maze.Enums;
 using UnityEngine;
 
-namespace Maze
+namespace Maze.Managers
 {
     public class GameManager : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
-        {
+
+        private GameStates _currentGameStates;
         
+        public delegate void GameDelegate();
+        public static event GameDelegate OnStartGame;
+        public static event GameDelegate OnGameOver;
+        public static event GameDelegate OnWinGame;
+
+
+        private void Awake()
+        {
+            _currentGameStates = GameStates.Running;
         }
 
-        // Update is called once per frame
-        void Update()
+        public void WinGame()
         {
-        
+            _currentGameStates = GameStates.WinGame;
         }
+
+        public void GameOver()
+        {
+            _currentGameStates = GameStates.GameOver;
+        }
+        
+        
     }
 }
