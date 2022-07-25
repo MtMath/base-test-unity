@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Maze
 {
@@ -6,7 +7,27 @@ namespace Maze
     public class Flashlight : MonoBehaviour
     {
 
-        private Light pointLight;
+        [SerializeField] private Light pointLight;
+        public float criticalBatteryRatio;
+
+        private bool isActive;
+
+        private void Update()
+        {
+            if (InputController.Instance.LBMButton)
+            {
+                isActive = !isActive;
+            }
+            
+            if (isActive)
+            {
+                TurnOn();
+            }
+            else
+            {
+                TurnOff();
+            }
+        }
 
         public void TurnOn()
         {
