@@ -13,4 +13,19 @@
         LBM,
         RBM,
     }
+
+    public enum EnemyStates
+    {
+        Idle,
+        Patrol,
+        Chase,
+        Reset,
+    }
+
+    public enum GameStates
+    {
+        Running,
+        GameOver,
+        WinGame,
+    }
 }
