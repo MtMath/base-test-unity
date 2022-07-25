@@ -50,7 +50,7 @@ namespace Maze
             
             //Mouse Buttons
             _inputs.Player.RBM.performed += UpdateRBM;
-            _inputs.Player.RBM.performed += UpdateRBM;
+            _inputs.Player.RBM.canceled += UpdateRBM;
 
             _inputs.Player.LBM.performed += UpdateLBM;
             _inputs.Player.LBM.canceled += UpdateLBM;
