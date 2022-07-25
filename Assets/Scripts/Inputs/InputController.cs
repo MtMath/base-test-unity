@@ -1,6 +1,7 @@
 using System;
 using Maze.Enums;
 using Maze.Generics;
+using Maze.Managers;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -26,7 +27,7 @@ namespace Maze
 
         private void OnEnable()
         {
-            _inputs.Player.Enable();
+            GameManager.OnStartGame += () => _inputs.Player.Enable();
             InputEvents();
         }
 

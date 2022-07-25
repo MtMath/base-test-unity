@@ -1,10 +1,9 @@
-using System;
 using Maze.Enums;
-using UnityEngine;
+using Maze.Generics;
 
 namespace Maze.Managers
 {
-    public class GameManager : MonoBehaviour
+    public class GameManager : Singleton<GameManager>
     {
 
         private GameStates _currentGameStates;
@@ -15,19 +14,27 @@ namespace Maze.Managers
         public static event GameDelegate OnWinGame;
 
 
-        private void Awake()
+        private void Start()
         {
             _currentGameStates = GameStates.Running;
+            OnStartGame?.Invoke();
+            OnStartGame = null;
         }
-
+        
         public void WinGame()
         {
             _currentGameStates = GameStates.WinGame;
+            OnWinGame?.Invoke();
+            OnWinGame = null;
         }
 
         public void GameOver()
         {
             _currentGameStates = GameStates.GameOver;
+            
+            OnGameOver?.Invoke();
+            OnGameOver = null;
+
         }
         
         
